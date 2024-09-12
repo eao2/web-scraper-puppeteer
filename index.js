@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 4000;
 
 app.get("/scrape", (req, res) => {
     scrape();
-    console.log('scraping...')
+    res.send("scraping...")
   });
 
 app.get("/", (req, res) => {
