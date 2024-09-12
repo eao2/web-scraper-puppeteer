@@ -4,7 +4,10 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 
-scrape();
+app.get("/scrape", (req, res) => {
+    scrape();
+    console.log('scraping...')
+  });
 
 app.get("/", (req, res) => {
   res.send("Render Puppeteer server is up and running!");
