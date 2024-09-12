@@ -44,6 +44,8 @@ const d = ["К", "Ж", "Д", "Х", "О", "Г", "А", "Б", "В"];
 const date = "042726"; // Z.Davaatseren
 
 async function scrape() {
+
+    console.log("puppeteer start?")
     const browser = await puppeteer.launch({
         headless: process.env.HEADLESS !== "false",
         args: [
