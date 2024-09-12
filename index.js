@@ -84,7 +84,7 @@ async function scrapeWebsite() {
 
                     try {
                         // Wait for images inside the result div to load (with a longer timeout for dynamic content)
-                        await page.waitForSelector('#result img', { timeout: 1000 }); // Wait up to 5 seconds
+                        await page.waitForSelector('#result img', { timeout: 2000 }); // Wait up to 5 seconds
                         console.log('Images detected within #result div.');
                     
                         // Extract the images from the result div
