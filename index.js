@@ -4,7 +4,7 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 
-scrape().catch(console.error);
+scrape();
 
 app.get("/", (req, res) => {
   res.send("Render Puppeteer server is up and running!");
