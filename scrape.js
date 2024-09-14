@@ -41,7 +41,7 @@ const d = ["К", "Ж", "Д", "Х", "О", "Г", "А", "Б", "В"];
 // const d = ["Ж", "Д", "А", "В"];
 // const d = ['А', 'В', 'Д', 'Ж', 'И', 'Й', 'К'];
 
-const date = "032726"; // Z.Davaatseren
+const date = "052726"; // Z.Davaatseren
 
 async function scrape() {
 
@@ -78,13 +78,13 @@ async function scrape() {
 
                 const id = `${fd}${dd}${date}${count.toString().padStart(2, '0')}`;
 
-                await page.waitForSelector('#ContentPlaceHolder1_RegisterTextBox');
+                await page.waitForSelector('#ContentPlaceHolder1_RegisterTextBox',{timeout: 300000}); // wait up to 5 min
                 await page.type('#ContentPlaceHolder1_RegisterTextBox', id);
                 await page.keyboard.press('Enter');
 
                 try {
                     // Wait for the result to load with a timeout
-                    await page.waitForSelector('#result', { timeout: 10000 });
+                    await page.waitForSelector('#result', { timeout: 300000 }); // wait up to 5 min
 
                     try {
                         // Wait for images inside the result div to load (with a longer timeout for dynamic content)
