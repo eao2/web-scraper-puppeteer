@@ -41,7 +41,7 @@ const d = ["К", "Ж", "Д", "Х", "О", "Г", "А", "Б", "В"];
 // const d = ["Ж", "Д", "А", "В"];
 // const d = ['А', 'В', 'Д', 'Ж', 'И', 'Й', 'К'];
 
-const date = "042726"; // Z.Davaatseren
+const date = "032726"; // Z.Davaatseren
 
 async function scrape() {
 
