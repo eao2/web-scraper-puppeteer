@@ -12,36 +12,36 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const e = [0, 20, 40, 60, 80]; // emegtei bish bol
 
 const f = [
-    // "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "Ө", "П", 
-    // "Р", "С", "Т", 
-    "У", 
-    // "Ү", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"
+    "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "Ө", "П", 
+    "Р", "С", "Т", 
+    // "У", 
+    "Ү", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"
 ];
 
-// const d = [
-//     "А", "Б", "В", "Г", "Д", 
-//     "Е", "Ё", 
-//     "Ж", 
-//     "З", "И",
-//     "Й", 
-//     "К", 
-//     "Л", "М", "Н",
-//     "О",
-//     "Ө", "П", "Р", "С",
-//     "Т", "У", "Ү", "Ф",
-//     "Х", 
-//     "Ц", "Ч", "Ш", "Щ", "Ъ",
-//     "Ы", "Ь", "Э", "Ю", "Я"
-// ];
+const d = [
+    "А", "Б", "В", "Г", "Д", 
+    "Е", "Ё", 
+    "Ж", 
+    "З", "И",
+    "Й", 
+    "К", 
+    "Л", "М", "Н",
+    "О",
+    "Ө", "П", "Р", "С",
+    "Т", "У", "Ү", "Ф",
+    "Х", 
+    "Ц", "Ч", "Ш", "Щ", "Ъ",
+    "Ы", "Ь", "Э", "Ю", "Я"
+];
 
 // Uncomment and modify these lines if you want to use different sets of letters
 // const d = ["А", "Б", "В", "Г", "Д", "Ж", "К", "О", "Х"];
-const d = ["К", "Ж", "Д", "Х", "О", "Г", "А", "Б", "В"];
+// const d = ["К", "Ж", "Д", "Х", "О", "Г", "А", "Б", "В"];
 // const d = ["Г", "А", "В"];
 // const d = ["Ж", "Д", "А", "В"];
 // const d = ['А', 'В', 'Д', 'Ж', 'И', 'Й', 'К'];
 
-const date = "052726"; // Z.Davaatseren
+const date = "042726"; // Z.Davaatseren
 
 async function scrape() {
 
@@ -84,7 +84,7 @@ async function scrape() {
 
                 try {
                     // Wait for the result to load with a timeout
-                    await page.waitForSelector('#result', { timeout: 300000 }); // wait up to 5 min
+                    await page.waitForSelector('#result', { timeout: 3600000 }); // wait up to 1h
 
                     try {
                         // Wait for images inside the result div to load (with a longer timeout for dynamic content)
