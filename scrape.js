@@ -47,15 +47,14 @@ async function scrape() {
 
     console.log("puppeteer start?")
     const browser = await puppeteer.launch({
-        headless: process.env.HEADLESS === "false" ? false : 'shell',
+        headless: process.env.HEADLESS !== "false",
         args: [
             "--disable-setuid-sandbox",
             "--no-sandbox",
             "--single-process",
             "--no-zygote",
+            "--disable-notifications",
         ],
-        ignoreHTTPSErrors: true,
-        defaultViewport: null,
         executablePath:
             process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
