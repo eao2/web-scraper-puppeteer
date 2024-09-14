@@ -74,11 +74,11 @@ async function scrape() {
                     continue;
                 }
 
-                await page.goto("https://www2.1212.mn/sonirkholtoi/Human_new/", { waitUntil: 'networkidle0' });
+                await page.goto("https://www2.1212.mn/sonirkholtoi/Human_new/", { waitUntil: 'networkidle0', timeout: 86400000 });
 
                 const id = `${fd}${dd}${date}${count.toString().padStart(2, '0')}`;
 
-                await page.waitForSelector('#ContentPlaceHolder1_RegisterTextBox',{timeout: 300000}); // wait up to 5 min
+                await page.waitForSelector('#ContentPlaceHolder1_RegisterTextBox'); 
                 await page.type('#ContentPlaceHolder1_RegisterTextBox', id);
                 await page.keyboard.press('Enter');
 
