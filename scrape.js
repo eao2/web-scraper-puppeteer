@@ -12,7 +12,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const e = [0, 20, 40, 60, 80]; // emegtei bish bol
 
 const f = [
-    "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "Ө", "П", 
+    // "А", "Б", "В", 
+    "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "Ө", "П", 
     "Р", "С", "Т", 
     // "У", 
     "Ү", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"
@@ -53,6 +54,7 @@ async function scrape() {
             "--no-sandbox",
             "--single-process",
             "--no-zygote",
+            "--disable-gpu",
             "--disable-notifications",
         ],
         executablePath:
@@ -63,7 +65,19 @@ async function scrape() {
 
     console.log("puppeteer work?")
 
-    const page = await browser.newPage();
+    const page = await browser.newPage();    // Enable request interception to block resources
+    await page.setRequestInterception(true);
+
+    // Block certain resource types like images, stylesheets, and fonts
+    const blockedResourceTypes = ['image', 'stylesheet', 'font'];
+
+    page.on('request', (request) => {
+        if (blockedResourceTypes.includes(request.resourceType())) {
+            request.abort(); // Block the resource
+        } else {
+            request.continue(); // Allow the resource
+        }
+    });
 
     for (const fd of f) {
         for (const dd of d) {
@@ -73,6 +87,9 @@ async function scrape() {
                     count += 10;
                     continue;
                 }
+
+                // Create a new page for every `n` iterations to reduce memory usage
+                // const page = await browser.newPage();
 
                 await page.goto("https://www2.1212.mn/sonirkholtoi/Human_new/", { waitUntil: 'networkidle0', timeout: 86400000 });
 
@@ -88,7 +105,7 @@ async function scrape() {
 
                     try {
                         // Wait for images inside the result div to load (with a longer timeout for dynamic content)
-                        await page.waitForSelector('#result img', { timeout: 2000 }); // Wait up to 5 seconds
+                        await page.waitForSelector('#result img', { timeout: 2000 }); // Wait up to 2 seconds
                         console.log('Images detected within #result div.');
                     
                         // Extract the images from the result div
@@ -125,13 +142,14 @@ async function scrape() {
                             console.log(`No image found for ID ${id}`);
                         }
                     } catch (error) {
-                        console.error(`Error processing images for ID ${id}:`, error.message);
+                        console.log(`Not found ID: ${id}:`, error.message);
                     }
                     
                 } catch (error) {
-                    console.error(`Error processing ID ${id}:`, error.message);
+                    console.log(`Error processing ID ${id}:`, error.message);
                 }
-
+                
+                // await page.close(); // Close the page after each iteration to release memory
                 count++;
             }
         }
