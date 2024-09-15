@@ -89,7 +89,7 @@ async function scrape() {
                 }
 
                 // Create a new page for every `n` iterations to reduce memory usage
-                // const page = await browser.newPage();
+                const page = await browser.newPage();
 
                 await page.goto("https://www2.1212.mn/sonirkholtoi/Human_new/", { waitUntil: 'networkidle0', timeout: 86400000 });
 
@@ -149,7 +149,7 @@ async function scrape() {
                     console.log(`Error processing ID ${id}:`, error.message);
                 }
                 
-                // await page.close(); // Close the page after each iteration to release memory
+                await page.close(); // Close the page after each iteration to release memory
                 count++;
             }
         }
