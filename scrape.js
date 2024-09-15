@@ -50,12 +50,39 @@ async function scrape() {
     const browser = await puppeteer.launch({
         headless: process.env.HEADLESS !== "false",
         args: [
-            "--disable-setuid-sandbox",
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote",
-            "--disable-gpu",
-            "--disable-notifications",
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--disable-gpu',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process', // <- this one doesn't works in Windows
+            '--disable-extensions',
+            '--disable-webgl',
+            '--disable-threaded-animation',
+            '--disable-threaded-scrolling',
+            '--disable-in-process-stack-traces',
+            '--disable-histogram-customizer',
+            '--disable-gl-extensions',
+            '--disable-composited-antialiasing',
+            '--disable-canvas-aa',
+            '--disable-3d-apis',
+            '--disable-accelerated-2d-canvas',
+            '--disable-accelerated-jpeg-decoding',
+            '--disable-accelerated-mjpeg-decode',
+            '--disable-app-list-dismiss-on-blur',
+            '--disable-accelerated-video-decode',
+            '--disable-ipc-flooding-protection',
+            '--js-flags=--expose-gc',
+            '--ignore-certificate-errors',
+            '--enable-features=NetworkService',
+            '--disable-features=UseChromeOSDirectVideoDecoder',
+            '--disable-features=IsolateOrigins',
+            '--disable-features=site-per-process',
+            '--disable-features=TranslateUI',
+            '--disable-features=BlinkGenPropertyTrees',
+            '--disable-infobars',
         ],
         executablePath:
             process.env.NODE_ENV === "production"
@@ -65,7 +92,8 @@ async function scrape() {
 
     console.log("puppeteer work?")
 
-    const page = await browser.newPage();    // Enable request interception to block resources
+    const page = await browser.newPage();
+    // Enable request interception to block resources
     await page.setRequestInterception(true);
 
     // Block certain resource types like images, stylesheets, and fonts
@@ -87,9 +115,6 @@ async function scrape() {
                     count += 10;
                     continue;
                 }
-
-                // Create a new page for every `n` iterations to reduce memory usage
-                const page = await browser.newPage();
 
                 await page.goto("https://www2.1212.mn/sonirkholtoi/Human_new/", { waitUntil: 'networkidle0', timeout: 86400000 });
 
@@ -149,7 +174,6 @@ async function scrape() {
                     console.log(`Error processing ID ${id}:`, error.message);
                 }
                 
-                await page.close(); // Close the page after each iteration to release memory
                 count++;
             }
         }
